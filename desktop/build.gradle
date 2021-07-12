@@ -4,7 +4,7 @@ sourceCompatibility = 1.7
 sourceSets.main.java.srcDirs = [ "src/" ]
 sourceSets.main.resources.srcDirs = ["../android/assets"]
 
-project.ext.mainClassName = "de.autosueberfahrendich.desktop.DesktopLauncher"
+project.ext.mainClassName = "de.daemoniac.autosueberfahrendich.desktop.DesktopLauncher"
 project.ext.assetsDir = new File("../android/assets")
 
 task runWithJavaExec(dependsOn: classes, type: JavaExec) {
