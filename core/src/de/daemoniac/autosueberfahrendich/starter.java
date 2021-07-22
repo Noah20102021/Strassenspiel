@@ -21,6 +21,8 @@ public class starter extends ApplicationAdapter {
 	OrthographicCamera camera;
 	//Hintergrundbild
 	Texture hintergrund;
+	Texture gescheitertmeldung;
+	Texture lvl1geschafftmeldung;
 	//Die Spielfigur
 	Texture figurbild;
 	//Der Ort wo die Spielfigur dargestellt wird
@@ -36,13 +38,22 @@ public class starter extends ApplicationAdapter {
 	long letztesAutoGeneriert;
 	//Schriftart zum Darstellen von Text
 	public BitmapFont font;
+	public BitmapFont fontkoord;
+	boolean lvl1geschafft=false;
+	boolean gescheitert=false;
+	Integer münzen=0;
 
 	@Override
 	public void create () {
 		//Zuerst die Objekte Initialisieren die zur Darstellung des Spielfeldes benutzt werden
 		batch = new SpriteBatch();
 		font=new BitmapFont();
+		font.getData().setScale(7);
+		fontkoord=new BitmapFont();
+		fontkoord.getData().setScale(4);
+		fontkoord.setColor(255,255,0,100);
 		hintergrund = new Texture("strase1.jpg");
+
 		camera=new OrthographicCamera();
 		camera.setToOrtho(false, hintergrund.getWidth(), hintergrund.getHeight());
 		//Jetzt die Spielfigur initialisieren. Dafür das Bild laden und das Rechteck erstellen wo das Bild dann dargestellt werden soll
@@ -68,50 +79,83 @@ public class starter extends ApplicationAdapter {
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(hintergrund, 0, 0, hintergrund.getWidth(), hintergrund.getHeight());
-        for(fahrzeug auto:fahrzeugliste) {
-            batch.draw(auto.autobild,  auto.rect.x,  auto.rect.y,  auto.rect.width / 3,  auto.rect.height / 3);
-        }
-        batch.draw(figurbild,figur.x,figur.y,figur.width,figur.height);
-		//TODO polizei
+		if(lvl1geschafft) {
 
-		font.draw(batch,"Koordinaten: x => "  + Gdx.input.getX() + " Y => " + Gdx.input.getY(), 0,hintergrund.getHeight());
-		if(!wurdeEnterGedrueckt) {
-			font.draw(batch, "Zum starten drücke Enter", hintergrund.getWidth() / 2, (hintergrund.getHeight() / 2) + 100);
-		}
-		batch.end();
-
-        if((TimeUtils.millis()-letztesAutoGeneriert)/1000>autoverzoegerung){
-            letztesAutoGeneriert=TimeUtils.millis();
-            fahrzeugliste.add(new fahrzeug());
-            autoverzoegerung= MathUtils.random(1,10);
-        }
-
-        for(fahrzeug auto:fahrzeugliste){
-            auto.rect.x+=300*Gdx.graphics.getDeltaTime();
-            if(auto.rect.x>hintergrund.getWidth()){
-
-            }
-        }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isTouched() ){
-			wurdeEnterGedrueckt=true;
-		}
-        if(wurdeEnterGedrueckt){
-
-        	if(figur.y>=hintergrund.getHeight()/3.5){
-				if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isTouched()){
-					leertastewurdegedrueckt=true;
-				}
-				if(leertastewurdegedrueckt){
-					figur.y += 110 * Gdx.graphics.getDeltaTime();
-				}
+			lvl1geschafftmeldung=new Texture("LVL.1 Geschafft.png");
+			batch.draw(lvl1geschafftmeldung, 0, 0, lvl1geschafftmeldung.getWidth(), lvl1geschafftmeldung.getHeight());
+			batch.end();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
+				figur.y=-50;
+				lvl1geschafft=false;
+				leertastewurdegedrueckt=false;
 			}
-        	if(figur.y<= hintergrund.getHeight()/3.5) {
-				figur.y += 75 * Gdx.graphics.getDeltaTime();
+		}else if(gescheitert) {
+			gescheitertmeldung=new Texture("Gescheitert.png");
+			batch.draw(gescheitertmeldung, 0, 0, gescheitertmeldung.getWidth(), gescheitertmeldung.getHeight());
+			batch.end();
+			if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
+				figur.y=-50;
+				gescheitert=false;
+				leertastewurdegedrueckt=false;
 			}
-		}
-        		//auto bewegen
+		}else {
+			batch.draw(hintergrund, 0, 0, hintergrund.getWidth(), hintergrund.getHeight());
+			for (fahrzeug auto : fahrzeugliste) {
+				batch.draw(auto.autobild, auto.rect.x, auto.rect.y, auto.rect.width , auto.rect.height );
+
+			}
+			batch.draw(figurbild, figur.x, figur.y, figur.width, figur.height);
+			//TODO polizei
+			String Spielinfos="Münzen: " + münzen;
+			fontkoord.draw(batch, Spielinfos, 0, hintergrund.getHeight());
+			if (!wurdeEnterGedrueckt) {
+				font.draw(batch, "Zum starten drücke Enter", hintergrund.getWidth() / 5, (hintergrund.getHeight() / 2) - 100);
+			}
+
+			batch.end();
+
+				if ((TimeUtils.millis() - letztesAutoGeneriert) / 1000 > autoverzoegerung) {
+					letztesAutoGeneriert = TimeUtils.millis();
+					fahrzeugliste.add(new fahrzeug());
+					autoverzoegerung = MathUtils.random(1, 3);
+				}
+
+				for (fahrzeug auto : fahrzeugliste) {
+					if (auto.rect.overlaps(figur)) {
+
+						gescheitert = true;
+					}
+					auto.rect.x += 300 * Gdx.graphics.getDeltaTime();
+
+					if (auto.rect.x > hintergrund.getWidth()) {
+						fahrzeugliste.removeValue(auto, true);
+					}
+				}
+
+
+				if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isTouched()) {
+					wurdeEnterGedrueckt = true;
+				}
+				if (wurdeEnterGedrueckt) {
+
+					if (figur.y >= hintergrund.getHeight() / 3.5) {
+						if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) {
+							leertastewurdegedrueckt = true;
+						}
+						if (leertastewurdegedrueckt) {
+							figur.y += 200 * Gdx.graphics.getDeltaTime();
+						}
+					}
+					if (figur.y <= hintergrund.getHeight() / 3.5) {
+						figur.y += 75 * Gdx.graphics.getDeltaTime();
+					}
+					if (figur.y >= hintergrund.getHeight()) {
+						lvl1geschafft = true;
+						münzen+=1000;
+					}
+				}
+				//auto bewegen
+			}
 
 		//TODO polizei
 	}
