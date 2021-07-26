@@ -41,10 +41,12 @@ public class starter extends ApplicationAdapter {
 	public BitmapFont fontkoord;
 	boolean lvl1geschafft=false;
 	boolean gescheitert=false;
-	Integer münzen=0;
+	Spielstand spielstand;
 
 	@Override
 	public void create () {
+        spielstand=new Spielstand();
+        spielstand.Laden();
 		//Zuerst die Objekte Initialisieren die zur Darstellung des Spielfeldes benutzt werden
 		batch = new SpriteBatch();
 		font=new BitmapFont();
@@ -67,7 +69,7 @@ public class starter extends ApplicationAdapter {
 		//ermittelt werden kann wieviel Zeit vergangen ist und wann das nächste Auto losfahren soll
         fahrzeugliste=new Array<>();
 		letztesAutoGeneriert=TimeUtils.millis();
-
+		spielstand.Laden();
 	}
 
 	@Override
@@ -89,6 +91,7 @@ public class starter extends ApplicationAdapter {
 				lvl1geschafft=false;
 				leertastewurdegedrueckt=false;
 			}
+			spielstand.Speichern();
 		}else if(gescheitert) {
 			gescheitertmeldung=new Texture("Gescheitert.png");
 			batch.draw(gescheitertmeldung, 0, 0, gescheitertmeldung.getWidth(), gescheitertmeldung.getHeight());
@@ -98,6 +101,7 @@ public class starter extends ApplicationAdapter {
 				gescheitert=false;
 				leertastewurdegedrueckt=false;
 			}
+            spielstand.Speichern();
 		}else {
 			batch.draw(hintergrund, 0, 0, hintergrund.getWidth(), hintergrund.getHeight());
 			for (fahrzeug auto : fahrzeugliste) {
@@ -106,7 +110,7 @@ public class starter extends ApplicationAdapter {
 			}
 			batch.draw(figurbild, figur.x, figur.y, figur.width, figur.height);
 			//TODO polizei
-			String Spielinfos="Münzen: " + münzen;
+			String Spielinfos="Münzen: " + spielstand.münzen;
 			fontkoord.draw(batch, Spielinfos, 0, hintergrund.getHeight());
 			if (!wurdeEnterGedrueckt) {
 				font.draw(batch, "Zum starten drücke Enter", hintergrund.getWidth() / 5, (hintergrund.getHeight() / 2) - 100);
@@ -151,7 +155,8 @@ public class starter extends ApplicationAdapter {
 					}
 					if (figur.y >= hintergrund.getHeight()) {
 						lvl1geschafft = true;
-						münzen+=1000;
+                        spielstand.münzen+=1000;
+                        spielstand.Speichern();
 					}
 				}
 				//auto bewegen
