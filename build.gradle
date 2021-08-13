@@ -12,7 +12,7 @@ buildscript {
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.9'
         classpath 'com.android.tools.build:gradle:4.0.0'
-        
+        classpath 'org.yaml:snakeyaml:1.27'
 
     }
 }
@@ -20,7 +20,7 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
 
-    version = '1.0'
+    version = '1.2'
     ext {
         appName = "Strassenspiel"
         gdxVersion = '1.9.11'
@@ -76,6 +76,8 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
+
+        implementation 'com.google.android.gms:play-services-ads:20.2.0'
         
     }
 }

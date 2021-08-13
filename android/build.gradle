@@ -17,11 +17,11 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "de.daemoniac.autosueberfahrendich"
-        minSdkVersion 14
+        applicationId "de.autosueberfahrendich"
+        minSdkVersion 16
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.2"
     }
     buildTypes {
         release {
