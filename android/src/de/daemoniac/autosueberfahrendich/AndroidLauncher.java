@@ -23,7 +23,7 @@ import de.daemoniac.autosueberfahrendich.werbung.AdsController;
 import static android.content.ContentValues.TAG;
 
 public class AndroidLauncher extends AndroidApplication implements AdsController {
-	//hier werden 2 unterschiedliche Arten an Werbund vorbereitet. Zum einen ein Werbebanner dass dauerhaft
+	//hier werden 2 unterschiedliche Arten an Werbung vorbereitet. Zum einen ein Werbebanner dass dauerhaft
 	//irgendwo eingeblendet werden kann (bannerAd) und zum anderen eine Werbeeinblendung
 	//die den gesamten Bildschirm einnimmt und für ein paar sekunden dargestellt wird. klickt
 	//der nutzer in der werbung auf das X landet er wieder in unserem Spiel
