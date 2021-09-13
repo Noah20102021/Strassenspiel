@@ -35,11 +35,14 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 	private static final String BANNER_AD_UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
 	private static final String INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 	private AndroidLauncher mthis;
+	private boolean werbungFertigGeladen=false;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mthis=this;
+
+
 		//hier legen wir fest was für werbung wir haben möchten. ich habe hier die Tags gesetzt für
 		//werbeeinblendungen die auch für kinder geeignet sind die noch nicht alt genug sind um
 		//datenschutzbestimmungen wirksam zuzustimmen und vom altersrating her sollte die werbund für alle
@@ -90,7 +93,7 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 		bannerAd.setAdUnitId(BANNER_AD_UNIT_ID);
 		bannerAd.setAdSize(AdSize.BANNER);
 		//Werbeeinblendung vorbereiten
-		AdRequest.Builder builder = new AdRequest.Builder();
+		/*AdRequest.Builder builder = new AdRequest.Builder();
 		AdRequest ad = builder.build();
 		InterstitialAd.load(this,INTERSTITIAL_AD_UNIT_ID, ad,
 				new InterstitialAdLoadCallback() {
@@ -105,8 +108,8 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 						Log.i(TAG, loadAdError.getMessage());
 						mInterstitialAd = null;
 					}
-				});
-
+				});*/
+		werbungFertigGeladen=true;
 	}
 
 	//überprüfen ob Internet verfügbar ist. ohne Internet ist Werbung etwas sinnfrei ;-) in diesem fall darf
@@ -182,4 +185,12 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 			}
 		});
 	}
+
+	@Override
+	public boolean debugmode() {
+		return BuildConfig.DEBUG;
+	}
+
+	@Override
+	public boolean initialisierungKomplett(){return werbungFertigGeladen;}
 }

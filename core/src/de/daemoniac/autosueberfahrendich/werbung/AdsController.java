@@ -6,4 +6,7 @@ public interface AdsController {
     public void showBannerAd();
     public void hideBannerAd();
     public void showInterstitialAd();
+    public boolean debugmode();
+    public boolean initialisierungKomplett();
+
 }

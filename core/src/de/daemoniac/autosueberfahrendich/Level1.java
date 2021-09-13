@@ -42,8 +42,8 @@ public class Level1 implements Screen {
     public BitmapFont fontkoord;
     boolean lvl1geschafft = false;
     boolean gescheitert = false;
-    private AdsController adsController;
-private starter Hauptspiel;
+    private starter Hauptspiel;
+    private boolean werbungAn=false;
 
 
     public Level1(starter pHauptspiel) {
@@ -108,6 +108,12 @@ private starter Hauptspiel;
             //nach dem darstellen des glückwunschbildschirms passiert nichts weiteres mehr dass für die
             //graphikkarte interessant ist. also können wir schon batch.end machen
             batch.end();
+            //Wenn das Werbebanner aktuell gezeigt wird soll es ausgeblendet werden da die werdebung nur auf dem spielfeld gezeigt werden soll, nicht
+            //bei den gescheitert oder gewonnen-meldungen
+            if(werbungAn && Hauptspiel.adsController != null){
+                Hauptspiel.adsController.hideBannerAd();
+                werbungAn=false;
+            }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
                 figur.y = -50;
@@ -122,6 +128,12 @@ private starter Hauptspiel;
             //nach dem darstellen des gescheitertbildschirms passiert nichts weiteres mehr dass für die
             //graphikkarte interessant ist. also können wir schon batch.end machen
             batch.end();
+            //Wenn das Werbebanner aktuell gezeigt wird soll es ausgeblendet werden da die werdebung nur auf dem spielfeld gezeigt werden soll, nicht
+            //bei den gescheitert oder gewonnen-meldungen
+            if(werbungAn && Hauptspiel.adsController != null){
+                Hauptspiel.adsController.hideBannerAd();
+                werbungAn=false;
+            }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
                 figur.y = -50;
@@ -140,16 +152,21 @@ private starter Hauptspiel;
             }
             batch.draw(figurbild, figur.x, figur.y, figur.width, figur.height);
             //TODO polizei
-            String Spielinfos = "Münzen: " + String.format("%,d",  Hauptspiel.spielstand.münzen);
+            String Spielinfos;
+            Spielinfos = "Münzen: " + String.format("%,d", Hauptspiel.spielstand.münzen);
             fontkoord.draw(batch, Spielinfos, 0, hintergrund.getHeight());
             if (!wurdeEnterGedrueckt) {
                 font.draw(batch, "Zum starten drücke Enter", hintergrund.getWidth() / 5, (hintergrund.getHeight() / 2) - 100);
             }
 
             batch.end();
-            if (adsController != null) {
-                if (adsController.isWifiConnected()) {
-                    adsController.showBannerAd();
+            //wenn die werbung für das werbebanner fertig geladen ist (das kann manchmal ein paar sekunden dauern nach dem spielstart) und aktuell noch nicht
+            //dargestellt wird, dann soll die werbung jetzt eingeblendet werden.
+            if (werbungAn==false  && Hauptspiel.adsController != null && Hauptspiel.adsController.initialisierungKomplett()) {
+                //funktioniert natürlich nur wenn internet vorhanden ist ;-)
+                if (Hauptspiel.adsController.isWifiConnected()) {
+                    Hauptspiel.adsController.showBannerAd();
+                    werbungAn=true;
                 }
             }
             //jetzt, da die graphikkarte informiert wurde was dargestellt werden soll,
