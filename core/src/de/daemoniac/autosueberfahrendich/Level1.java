@@ -77,6 +77,9 @@ public class Level1 implements Screen {
         fahrzeugliste = new Array<>();
         letztesAutoGeneriert = TimeUtils.millis();
 
+        //werbebanner positionieren
+        Hauptspiel.adsController.setzeBannerposition(100,220);
+
     }
 
 

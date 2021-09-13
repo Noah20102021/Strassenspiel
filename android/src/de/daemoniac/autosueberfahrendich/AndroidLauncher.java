@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsoluteLayout;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -36,6 +37,9 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 	private static final String INTERSTITIAL_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
 	private AndroidLauncher mthis;
 	private boolean werbungFertigGeladen=false;
+
+	//position des werbebanners
+	private RelativeLayout.LayoutParams werbeparams;
 
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
@@ -76,10 +80,10 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 		RelativeLayout layout = new RelativeLayout(mthis);
 		layout.addView(gameView, ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT);
-		RelativeLayout.LayoutParams werbeparams = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
+		werbeparams = new RelativeLayout.LayoutParams(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
-		werbeparams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		werbeparams.addRule(RelativeLayout.ALIGN_TOP);
 		bannerAd = new AdView(this);
 		layout.addView(bannerAd, werbeparams);
 		setContentView(layout);
@@ -193,4 +197,10 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 
 	@Override
 	public boolean initialisierungKomplett(){return werbungFertigGeladen;}
+
+	@Override
+	public void setzeBannerposition(Integer X, Integer Y) {
+		werbeparams.leftMargin=X;
+		werbeparams.topMargin=Y;
+	}
 }

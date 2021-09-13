@@ -8,5 +8,5 @@ public interface AdsController {
     public void showInterstitialAd();
     public boolean debugmode();
     public boolean initialisierungKomplett();
-
+    public void setzeBannerposition(Integer X, Integer Y);
 }
