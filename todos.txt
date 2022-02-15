@@ -6,3 +6,7 @@
 - alternative werbenetzwerke recherchieren
 - anzahl leben implementieren. wenn leben niedriger als maximalzahl abspeichern wann die maximalzahl unterschritten wurde. einmal die minute nachprüfen wieviel zeit vergangen ist. für jede halbe std die vergangen ist wird ein leben aufaddiert bis die maximalzahl wieder erreicht ist.
 - produktivschaltung der app
+- 3.00000000000 Level Hinzufügen
+- Neue karactere
+- Musik
+- Sounds

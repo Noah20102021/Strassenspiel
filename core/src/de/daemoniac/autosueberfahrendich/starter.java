@@ -41,7 +41,7 @@ public class starter extends Game {
 		spielstand=new Spielstand();
 		spielstand.Laden();
 		//setzen des ersten spielbildschirmes. das kann dann später ausgetauscht werden gegen das spielstartmenü oder evtl einem ladebildschirm o.ä.
-		this.setScreen(new  Level1(this));
+		this.setScreen(new Menue(this));
 
 	}
 }
