@@ -1,0 +1,8 @@
+- level 2 mit copy und paste implementieren
+- menü implementieren
+- neue graphik für das level damit werbebanner auf strassenschildern erscheinen
+- laden der texturen für gescheitert und geschafft auslagern in den constructor
+- echte werbeid organisieren
+- alternative werbenetzwerke recherchieren
+- anzahl leben implementieren. wenn leben niedriger als maximalzahl abspeichern wann die maximalzahl unterschritten wurde. einmal die minute nachprüfen wieviel zeit vergangen ist. für jede halbe std die vergangen ist wird ein leben aufaddiert bis die maximalzahl wieder erreicht ist.
+- produktivschaltung der app
