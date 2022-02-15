@@ -78,7 +78,9 @@ public class Level1 implements Screen {
         letztesAutoGeneriert = TimeUtils.millis();
 
         //werbebanner positionieren
-        Hauptspiel.adsController.setzeBannerposition(100,220);
+        if(Hauptspiel.adsController != null) {
+            Hauptspiel.adsController.setzeBannerposition(100, 220);
+        }
 
     }
 
