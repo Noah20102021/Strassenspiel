@@ -106,6 +106,7 @@ public class Level1 implements Screen {
         batch.begin();
         //zuerst überprüfen wir ob ein zwischenbild dargestellt werden soll (level geschafft oder gescheitert)
         //das kann man später, der übersicht halber, in eine seperate klasse auslagern. im moment reicht das noch so
+
         if (lvl1geschafft) {
 
             lvl1geschafftmeldung = new Texture("LVL.1 Geschafft.png");
@@ -141,6 +142,7 @@ public class Level1 implements Screen {
             }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
+
                 figur.y = -50;
                 gescheitert = false;
                 leertastewurdegedrueckt = false;
