@@ -15,12 +15,13 @@ public class fahrzeug {
     public Rectangle rect;
 
     int fahrspur=0;
-
-    public fahrzeug(){
+    String fahtrichtung;
+    public fahrzeug(int farzeugx, int farzeugy, String farzeugrichtung){
+        fahtrichtung=farzeugrichtung;
         //momentan passiert hier noch nicht viel. beim erstellen einer neuen instanz der klasse wird die texture geladen
         //man könnte hier jetzt einen zufallsgenerator einbauen und in abhängigkeit des ergebnisses unterschiedliche texturen
         //darstellen. dann würden unterschiedliche autos da lang fahren
-        autobild=new Texture("pickuplr1.png");
+        autobild=new Texture("pickup1" +farzeugrichtung+".png");
         //neue positionsbeschreibung erstellen
         rect = new Rectangle();
         //wir haben festgestellt, dass das auto zu groß für die fahrspur ist, auf ein drittel der autogröße geschrumpft
@@ -32,7 +33,7 @@ public class fahrzeug {
         //aktuell starten alle autos links am rand auf immer der gleichen höhe. wenn wir irgendwann unterschiedliche
         //fahrspuren implementieren muss anstelle der aktuellen werte die fahrspur ermittelt werden und dann
         //die startwerte der fahrspur eingetragen werden
-        rect.x=0;
-        rect.y=1080/2 - 110;
+        rect.x=farzeugx;
+        rect.y=farzeugy;
     }
 }

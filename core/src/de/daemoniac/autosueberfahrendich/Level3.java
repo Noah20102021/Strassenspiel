@@ -1,6 +1,5 @@
 package de.daemoniac.autosueberfahrendich;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -13,9 +12,8 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import de.daemoniac.autosueberfahrendich.werbung.AdsController;
 
-public class Level1 implements Screen {
+public class Level3 implements Screen {
     //Das Zeichenobjekt um auf dem Bildschirm etwas zu Zeichnen
     SpriteBatch batch;
     //Die Kamera die auf das 2-Dimensionale Spielfeld blickt
@@ -36,7 +34,8 @@ public class Level1 implements Screen {
     //Die Liste aller Fahrzeuge... sollte bei Gelegenheit auch noch leer gemacht werden
     Array<fahrzeug> fahrzeugliste;
     //wie lang es her ist dass ein Auto gestartet wurde
-    long letztesAutoGeneriert;
+    long letztesAutoGeneriertu;
+    long letztesAutoGenerierto;
     //Schriftart zum Darstellen von Text
     public BitmapFont font;
     public BitmapFont fontkoord;
@@ -44,9 +43,11 @@ public class Level1 implements Screen {
     boolean gescheitert = false;
     private starter Hauptspiel;
     private boolean werbungAn=false;
+    private int autoverzoegerungu;
+    private int autoverzoegerungo;
 
 
-    public Level1(starter pHauptspiel) {
+    public Level3(starter pHauptspiel) {
         Hauptspiel=pHauptspiel;
         initialisierung();
     }
@@ -75,12 +76,11 @@ public class Level1 implements Screen {
         //Leere Fahrzeugliste erstellen und die aktuelle Zeit des Spielstarts abspeichern damit später
         //ermittelt werden kann wieviel Zeit vergangen ist und wann das nächste Auto losfahren soll
         fahrzeugliste = new Array<>();
-        letztesAutoGeneriert = TimeUtils.millis() -4000;
+        letztesAutoGeneriertu = TimeUtils.millis() -4000;
+        letztesAutoGenerierto = TimeUtils.millis() -4000;
 
         //werbebanner positionieren
-        if(Hauptspiel.adsController!=null) {
-            Hauptspiel.adsController.setzeBannerposition(100, 220);
-        }
+     //  Hauptspiel.adsController.setzeBannerposition(100,220);
 
     }
 
@@ -175,10 +175,15 @@ public class Level1 implements Screen {
             //ermitteln ob weitere autos generiert werden, gehen alle bestehenden autos durch und
             //bewegen sie ein stückchen weiter, entfernen autos die schon aus dem bild rausgefahren sind
             // und machen die kollisionsüberprüfung ob die figur ein auto berührt
-            if ((TimeUtils.millis() - letztesAutoGeneriert) / 1000 > autoverzoegerung) {
-                letztesAutoGeneriert = TimeUtils.millis();
+            if ((TimeUtils.millis() - letztesAutoGeneriertu) / 1000 > autoverzoegerungu) {
+                letztesAutoGeneriertu = TimeUtils.millis();
                 fahrzeugliste.add(new fahrzeug(0,1080/2 - 110, "_lr"));
-                autoverzoegerung = MathUtils.random(1, 3);
+                autoverzoegerungu = MathUtils.random(1, 4);
+            }
+            if ((TimeUtils.millis() - letztesAutoGenerierto) / 1000 > autoverzoegerungo) {
+                letztesAutoGenerierto = TimeUtils.millis();
+                fahrzeugliste.add(new fahrzeug(hintergrund.getWidth(), 1080/2 + 80, "_rl"));
+                autoverzoegerungo = MathUtils.random(1, 4);
             }
 
             for (fahrzeug auto : fahrzeugliste) {
@@ -187,8 +192,11 @@ public class Level1 implements Screen {
                     gescheitert = true;
                     Hauptspiel.spielstand.Speichern();
                 }
-                auto.rect.x += 300 * Gdx.graphics.getDeltaTime();
-
+                if (auto.fahtrichtung=="_lr") {
+                    auto.rect.x += 300 * Gdx.graphics.getDeltaTime();
+                }else {
+                    auto.rect.x -= 300 * Gdx.graphics.getDeltaTime();
+                }
                 if (auto.rect.x > hintergrund.getWidth()) {
                     fahrzeugliste.removeValue(auto, true);
                 }
@@ -213,7 +221,7 @@ public class Level1 implements Screen {
                     lvl1geschafft = true;
                     Hauptspiel.spielstand.münzen += 1000;
                     Hauptspiel.spielstand.Speichern();
-                    Hauptspiel.spielstand.level = 2;
+                    Hauptspiel.spielstand.level = 4;
                     Hauptspiel.spielstand.Speichern();
 
                  }
