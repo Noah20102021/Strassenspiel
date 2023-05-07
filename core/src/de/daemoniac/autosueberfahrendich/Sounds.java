@@ -1,5 +1,8 @@
 package de.daemoniac.autosueberfahrendich;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -15,59 +18,22 @@ public class Sounds {
 
     //defining the byte buffer
     private static final int BUFFER_SIZE = 4096;
-
+    Sound Soundobject;
     void play(String filePath) {
-        File soundFile = new File(filePath);
-        try {
-            //convering the audio file to a stream
-            AudioInputStream sampleStream = AudioSystem.getAudioInputStream(soundFile);
 
-            AudioFormat formatAudio = sampleStream.getFormat();
 
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, formatAudio);
+            Soundobject = Gdx.audio.newSound(Gdx.files.internal(filePath));
+            Soundobject.play();
 
-            SourceDataLine theAudioLine = (SourceDataLine) AudioSystem.getLine(info);
-
-            theAudioLine.open(formatAudio);
-
-            theAudioLine.start();
-
-            System.out.println("Audio Player Started.");
-
-            byte[] bufferBytes = new byte[BUFFER_SIZE];
-            int readBytes = -1;
-
-            while ((readBytes = sampleStream.read(bufferBytes)) != -1) {
-                theAudioLine.write(bufferBytes, 0, readBytes);
-            }
-
-            theAudioLine.drain();
-            theAudioLine.close();
-            sampleStream.close();
-
-            System.out.println("Playback has been finished.");
-
-        } catch (UnsupportedAudioFileException e) {
-            System.out.println("Unsupported file.");
-            e.printStackTrace();
-        } catch (LineUnavailableException e) {
-            System.out.println("Line not found.");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Experienced an error.");
-            e.printStackTrace();
-        }
     }
 
     public static void klick() {
-        String Test;
-        File file = new File("Sounds");
-        Test = file.getAbsolutePath();
-        System.out.println(Test);
+//test
 
-        String thePath = Test + "/Klick.wav";
+        String thePath =  "Sounds/Klick.wav";
         Sounds player = new Sounds();
         player.play(thePath);
+
     }
 
 }
