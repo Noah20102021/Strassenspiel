@@ -28,7 +28,7 @@ public class Sounds {
     }
 
     public static void klick() {
-
+//test
 
         String thePath =  "Sounds/Klick.wav";
         Sounds player = new Sounds();
