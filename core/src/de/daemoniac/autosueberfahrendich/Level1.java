@@ -51,7 +51,8 @@ public class Level1 implements Screen {
         initialisierung();
     }
 
-
+   public String GTpng = "-";
+   public Integer GT;
     private void initialisierung(){
 
         //Zuerst die Objekte Initialisieren die zur Darstellung des Spielfeldes benutzt werden
@@ -75,10 +76,12 @@ public class Level1 implements Screen {
         //Leere Fahrzeugliste erstellen und die aktuelle Zeit des Spielstarts abspeichern damit später
         //ermittelt werden kann wieviel Zeit vergangen ist und wann das nächste Auto losfahren soll
         fahrzeugliste = new Array<>();
-        letztesAutoGeneriert = TimeUtils.millis();
+        letztesAutoGeneriert = TimeUtils.millis() -4000;
 
+        GT = MathUtils.random(1, 10);
+        System.out.println(GT);
         //werbebanner positionieren
-        Hauptspiel.adsController.setzeBannerposition(100,220);
+     //  Hauptspiel.adsController.setzeBannerposition(100,220);
 
     }
 
@@ -92,6 +95,7 @@ public class Level1 implements Screen {
     // von der graphikdarstellung ausgeführt wird
     @Override
     public void render(float delta) {
+       // System.out.println(Hauptspiel.spielstand.münzen);
         //Erst mal Hintergrundfarbe machen damit etwas zu sehen ist falls das Hintergrundbild nicht oder nicht richtig geladen wird.
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -106,7 +110,13 @@ public class Level1 implements Screen {
         //das kann man später, der übersicht halber, in eine seperate klasse auslagern. im moment reicht das noch so
         if (lvl1geschafft) {
 
-            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft.png");
+            if (GT == 4){
+            GTpng = "+";
+            Hauptspiel.spielstand.RGBmünzen += 10;
+            Hauptspiel.spielstand.Speichern();
+                GT = 0;
+            }
+            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft" + GTpng + ".png");
             batch.draw(lvl1geschafftmeldung, 0, 0, lvl1geschafftmeldung.getWidth(), lvl1geschafftmeldung.getHeight());
             //nach dem darstellen des glückwunschbildschirms passiert nichts weiteres mehr dass für die
             //graphikkarte interessant ist. also können wir schon batch.end machen
@@ -119,9 +129,8 @@ public class Level1 implements Screen {
             }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
-                figur.y = -50;
-                lvl1geschafft = false;
-                leertastewurdegedrueckt = false;
+                Hauptspiel.setScreen(new Menue(Hauptspiel));
+                Sounds.klick();
             }
 
         } else if (gescheitert) {
@@ -139,9 +148,10 @@ public class Level1 implements Screen {
             }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
-                figur.y = -50;
-                gescheitert = false;
-                leertastewurdegedrueckt = false;
+                Hauptspiel.spielstand.leben -= 1;
+                Hauptspiel.spielstand.Speichern();
+                Hauptspiel.setScreen(new Menue(Hauptspiel));
+                Sounds.klick();
             }
 
         } else {
@@ -156,11 +166,8 @@ public class Level1 implements Screen {
             batch.draw(figurbild, figur.x, figur.y, figur.width, figur.height);
             //TODO polizei
             String Spielinfos;
-            Spielinfos = "Münzen: " + String.format("%,d", Hauptspiel.spielstand.münzen);
+            Spielinfos = "Münzen: " + String.format("%,d", Hauptspiel.spielstand.münzen) + " Level: " + String.format("%,d", Hauptspiel.spielstand.level);
             fontkoord.draw(batch, Spielinfos, 0, hintergrund.getHeight());
-            if (!wurdeEnterGedrueckt) {
-                font.draw(batch, "Zum starten drücke Enter", hintergrund.getWidth() / 5, (hintergrund.getHeight() / 2) - 100);
-            }
 
             batch.end();
             //wenn die werbung für das werbebanner fertig geladen ist (das kann manchmal ein paar sekunden dauern nach dem spielstart) und aktuell noch nicht
@@ -179,7 +186,7 @@ public class Level1 implements Screen {
             // und machen die kollisionsüberprüfung ob die figur ein auto berührt
             if ((TimeUtils.millis() - letztesAutoGeneriert) / 1000 > autoverzoegerung) {
                 letztesAutoGeneriert = TimeUtils.millis();
-                fahrzeugliste.add(new fahrzeug());
+                fahrzeugliste.add(new fahrzeug(0,1080/2 - 110, "_lr"));
                 autoverzoegerung = MathUtils.random(1, 3);
             }
 
@@ -197,10 +204,8 @@ public class Level1 implements Screen {
             }
 
 
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.isTouched()) {
-                wurdeEnterGedrueckt = true;
-            }
-            if (wurdeEnterGedrueckt) {
+
+
 
                 if (figur.y >= hintergrund.getHeight() / 3.5) {
                     if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isTouched()) {
@@ -211,14 +216,16 @@ public class Level1 implements Screen {
                     }
                 }
                 if (figur.y <= hintergrund.getHeight() / 3.5) {
-                    figur.y += 75 * Gdx.graphics.getDeltaTime();
+                    figur.y += 200 * Gdx.graphics.getDeltaTime();
                 }
                 if (figur.y >= hintergrund.getHeight()) {
                     lvl1geschafft = true;
                     Hauptspiel.spielstand.münzen += 1000;
                     Hauptspiel.spielstand.Speichern();
-                }
-            }
+                    Hauptspiel.spielstand.level = 2;
+                    Hauptspiel.spielstand.Speichern();
+
+                 }
             //auto bewegen
         }
 

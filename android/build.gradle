@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "30.0.2"
-    compileSdkVersion 30
+    compileSdkVersion 31
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -14,12 +14,14 @@ android {
 
     }
     packagingOptions {
-        exclude 'META-INF/robovm/ios/robovm.xml'
+        resources {
+            excludes += ['META-INF/robovm/ios/robovm.xml']
+        }
     }
     defaultConfig {
         applicationId "de.autosueberfahrendich"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 6
         versionName "1.0"
     }
