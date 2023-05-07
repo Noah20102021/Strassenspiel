@@ -114,7 +114,7 @@ public class Level3 implements Screen {
 
             if (GT == 4){
                 GTpng = "+";
-                Hauptspiel.spielstand.RGBmünzen += 10;
+                Hauptspiel.spielstand.RGBmuenzen += 10;
                 Hauptspiel.spielstand.Speichern();
                 GT = 0;
             }
@@ -168,7 +168,7 @@ public class Level3 implements Screen {
             batch.draw(figurbild, figur.x, figur.y, figur.width, figur.height);
             //TODO polizei
             String Spielinfos;
-            Spielinfos = "Münzen: " + String.format("%,d", Hauptspiel.spielstand.münzen) + " Level: " + String.format("%,d", Hauptspiel.spielstand.level);
+            Spielinfos = "Münzen: " + String.format("%,d", Hauptspiel.spielstand.muenzen) + " Level: " + String.format("%,d", Hauptspiel.spielstand.level);
             fontkoord.draw(batch, Spielinfos, 0, hintergrund.getHeight());
 
             batch.end();
@@ -230,7 +230,7 @@ public class Level3 implements Screen {
                 }
                 if (figur.y >= hintergrund.getHeight()) {
                     lvl1geschafft = true;
-                    Hauptspiel.spielstand.münzen += 1000;
+                    Hauptspiel.spielstand.muenzen += 1000;
                     Hauptspiel.spielstand.Speichern();
                     Hauptspiel.spielstand.level = 4;
                     Hauptspiel.spielstand.Speichern();

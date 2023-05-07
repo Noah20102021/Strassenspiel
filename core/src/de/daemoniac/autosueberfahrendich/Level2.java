@@ -114,7 +114,7 @@ public class Level2 implements Screen {
 
             if (GT == 4){
                 GTpng = "+";
-                Hauptspiel.spielstand.RGBmünzen += 10;
+                Hauptspiel.spielstand.RGBmuenzen += 10;
                 Hauptspiel.spielstand.Speichern();
                 GT = 0;
             }

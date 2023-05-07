@@ -56,7 +56,8 @@ public String f;
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,0);
+
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Camera.update();
         ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.setProjectionMatrix(Camera.combined);
@@ -65,7 +66,15 @@ public String f;
         String Münzen;
         String Leben;
         String RGB;
-        Münzen = String.format("%,d", Hauptspiel.spielstand.münzen);
+
+        Vector3 debugkoords = null;
+        if (Gdx.input.isTouched()) {
+            debugkoords = new Vector3();
+            debugkoords.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            Camera.unproject(debugkoords);
+            //anzeige.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, debugkoords.toString(), 290, 260);
+        }
+        Münzen = String.format("%,d", Hauptspiel.spielstand.muenzen);
         Leben = String.format("%,d", Hauptspiel.spielstand.leben);
         RGB = String.format("%,d", Hauptspiel.spielstand.RGBmünzen);
         anzeige.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, Münzen, 290, 440);
@@ -77,32 +86,52 @@ public String f;
                 Vector3 NINUNINUNINUKNOPFWURDEBERÜRT = new Vector3();
                 NINUNINUNINUKNOPFWURDEBERÜRT.set(Gdx.input.getX(), Gdx.input.getY(), 0);
                 Camera.unproject(NINUNINUNINUKNOPFWURDEBERÜRT);
-                if (NINUNINUNINUKNOPFWURDEBERÜRT.x > 1400 && NINUNINUNINUKNOPFWURDEBERÜRT.x < 2440) {
-                    
-                    switch (Hauptspiel.spielstand.level){
-                        case 1:
-                            Hauptspiel.setScreen(new Level1(Hauptspiel));
-                            Sounds.klick();
-                            break;
-                        case 2:
-                            Hauptspiel.setScreen(new Level2(Hauptspiel));
-                            Sounds.klick();
-                            break;
-                        case 3:
-                            Hauptspiel.setScreen(new Level3(Hauptspiel));
-                            Sounds.klick();
-                            break;
-                        case 4:
-                            Hauptspiel.setScreen(new Level4(Hauptspiel));
-                            Sounds.klick();
-                            break;
-                        case 5:
-                            Hauptspiel.spielstand.level = 1;
-                            Hauptspiel.spielstand.Speichern();
-                            break;
+                if (NINUNINUNINUKNOPFWURDEBERÜRT.x > Playknopf.x && NINUNINUNINUKNOPFWURDEBERÜRT.x < Playknopf.x+Playknopf.width) {//Der Play-Knopf
+                    if (Hauptspiel.spielstand.leben > 0) {
+                        switch (Hauptspiel.spielstand.level) {
+                            case 1:
+                                Hauptspiel.setScreen(new Level1(Hauptspiel));
+                                Sounds.klick();
+                                break;
+                            case 2:
+                                Hauptspiel.setScreen(new Level2(Hauptspiel));
+                                Sounds.klick();
+                                break;
+                            case 3:
+                                Hauptspiel.setScreen(new Level3(Hauptspiel));
+                                Sounds.klick();
+                                break;
+                            case 4:
+                                Hauptspiel.setScreen(new Level4(Hauptspiel));
+                                Sounds.klick();
+                                break;
+                            case 5:
+                                Hauptspiel.spielstand.level = 1;
+                                Hauptspiel.spielstand.Speichern();
+                                break;
+                        }
+                    } else {
+                        //TODO::Meldung bringen dass keine Leben vorhanden sind
+                    }//end if leben testen
+
+                }//end if play-knopf-gedrückt
+
+                if ((NINUNINUNINUKNOPFWURDEBERÜRT.x > Lebenknopf.x) && (NINUNINUNINUKNOPFWURDEBERÜRT.x < Lebenknopf.x+Lebenknopf.width )&& (NINUNINUNINUKNOPFWURDEBERÜRT.y > Lebenknopf.y) && (NINUNINUNINUKNOPFWURDEBERÜRT.y < Lebenknopf.y+Lebenknopf.height)){
+                if (Hauptspiel.spielstand.leben < 5){
+                    if (Hauptspiel.spielstand.muenzen >= 5000){
+                        //TODO: Abfrage erstellen ob man wirklich 5000 Münzen ausgeben möchte
+                        Hauptspiel.spielstand.muenzen -= 5000;
+                        Hauptspiel.spielstand.leben += 1;
+                        Hauptspiel.spielstand.Speichern();
+                        menuedelay = TimeUtils.millis();
+                    }else{
+                        //TODO:Meldung bringen dass nicht genug münzen da sind
                     }
+                }else{
+                    //TODO:Meldung bringen dass Leben bereits voll sind
                 }
-            }
+                }
+            }//Touch bereich ende
         }
     }
 

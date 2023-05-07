@@ -9,9 +9,9 @@ public class Spielstand {
     //alles was irgendwie gespeichert werden soll, sollte hier in dieser klasse drin stehen oder
     //von dieser klasse aus erreichbar sein. damit behält man gut den überblick was beim laden/speichern
     // alles berücksichtigt werden muss. das dient also in erster linie der einfachheit für uns
-    public Integer münzen=1;
+    public Integer muenzen=1;
     public Integer level=1;
-    public Integer RGBmünzen = 0;
+    public Integer RGBmuenzen = 0;
     public Integer leben=5;
     public void Laden(){
         //zuerst überprüfen ob wir auf den lokalen speicher zugreifen können.
@@ -35,7 +35,7 @@ public class Spielstand {
                         //mit split ":" teilen wir den text auf in 2 elemente. der vordere teil enthält dann
                         //"münzen", der hintere teil enthält dann die anzahl der münzen. mit [0] könnten
                         //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
-                        münzen=Integer.parseInt(zeile.split(":")[1]);
+                        muenzen=Integer.parseInt(zeile.split(":")[1]);
                     }
                 }
 
@@ -56,7 +56,7 @@ public class Spielstand {
                 System.out.println(zeile4);
                 if (zeile4.startsWith("RGB:")) {
 
-                    RGBmünzen = Integer.parseInt(zeile4.split(":")[1]);
+                    RGBmuenzen = Integer.parseInt(zeile4.split(":")[1]);
 
                 }
                 System.out.println(leben);
