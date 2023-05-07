@@ -14,15 +14,13 @@ android {
 
     }
     packagingOptions {
-        resources {
-            excludes += ['META-INF/robovm/ios/robovm.xml']
-        }
+        exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
         applicationId "de.autosueberfahrendich"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 6
+        versionCode 10
         versionName "1.0"
     }
     buildTypes {
@@ -34,7 +32,7 @@ android {
 }
 
 
-// called every time gradle gets executed, takes the native dependencies of
+// c alled every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders
 // so they get packed with the APK.
 task copyAndroidNatives {

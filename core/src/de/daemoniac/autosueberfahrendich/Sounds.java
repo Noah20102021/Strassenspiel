@@ -11,7 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.SourceDataLine;
 
-public class Sounds implements test {
+public class Sounds {
 
     //defining the byte buffer
     private static final int BUFFER_SIZE = 4096;

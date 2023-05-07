@@ -46,8 +46,7 @@ public class Level3 implements Screen {
     private int autoverzoegerungu;
     private int autoverzoegerungo;
 
-   public String GTpng = "-";
-   public Integer GT;
+
     public Level3(starter pHauptspiel) {
         Hauptspiel=pHauptspiel;
         initialisierung();
@@ -80,8 +79,6 @@ public class Level3 implements Screen {
         letztesAutoGeneriertu = TimeUtils.millis() -4000;
         letztesAutoGenerierto = TimeUtils.millis() -4000;
 
-        GT = MathUtils.random(1, 10);
-        System.out.println(GT);
         //werbebanner positionieren
      //  Hauptspiel.adsController.setzeBannerposition(100,220);
 
@@ -97,7 +94,7 @@ public class Level3 implements Screen {
     // von der graphikdarstellung ausgeführt wird
     @Override
     public void render(float delta) {
-       // System.out.println(Hauptspiel.spielstand.münzen);
+        System.out.println(Hauptspiel.spielstand.münzen);
         //Erst mal Hintergrundfarbe machen damit etwas zu sehen ist falls das Hintergrundbild nicht oder nicht richtig geladen wird.
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -112,13 +109,7 @@ public class Level3 implements Screen {
         //das kann man später, der übersicht halber, in eine seperate klasse auslagern. im moment reicht das noch so
         if (lvl1geschafft) {
 
-            if (GT == 4){
-                GTpng = "+";
-                Hauptspiel.spielstand.RGBmünzen += 10;
-                Hauptspiel.spielstand.Speichern();
-                GT = 0;
-            }
-            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft" + GTpng + ".png");
+            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft.png");
             batch.draw(lvl1geschafftmeldung, 0, 0, lvl1geschafftmeldung.getWidth(), lvl1geschafftmeldung.getHeight());
             //nach dem darstellen des glückwunschbildschirms passiert nichts weiteres mehr dass für die
             //graphikkarte interessant ist. also können wir schon batch.end machen
@@ -150,8 +141,6 @@ public class Level3 implements Screen {
             }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
-                Hauptspiel.spielstand.leben -= 1;
-                Hauptspiel.spielstand.Speichern();
                 Hauptspiel.setScreen(new Menue(Hauptspiel));
                 Sounds.klick();
             }
