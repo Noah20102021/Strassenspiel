@@ -11,6 +11,8 @@ public class Spielstand {
     // alles berücksichtigt werden muss. das dient also in erster linie der einfachheit für uns
     public Integer münzen=1;
     public Integer level=1;
+    public Integer RGBmünzen = 0;
+    public Integer leben=5;
     public void Laden(){
         //zuerst überprüfen ob wir auf den lokalen speicher zugreifen können.
         boolean isLocalAvailable = Gdx.files.isLocalStorageAvailable();
@@ -24,8 +26,8 @@ public class Spielstand {
                 //in handlichere teile aufspalten. es ist sinnvoll sich irgendein zeichen auszudenken
                 //mit dem man einzelne werte voneinander trennen kann. hier habe ich ein "," genommen. man könnte aber auch
                 // "/" oder ";" nehmen.
-                String lesestring=datei.readString();
-                String[] splitstring=lesestring.split(",");
+                String lesestring=datei.readString();;
+                String[] splitstring = lesestring.split(",");
                 //wir haben jetzt eine liste an einzelnen informationen. aktuell speichern wir nur die münzanzahl
                 //dh in dieser liste wird nur ein einziges element sein. und das wird lauten "münzen:xxxx"
                 for(String zeile:splitstring){
@@ -35,10 +37,30 @@ public class Spielstand {
                         //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
                         münzen=Integer.parseInt(zeile.split(":")[1]);
                     }
-                    if (zeile.startsWith("level:")){
-                        level=Integer.parseInt(zeile.split(":")[1]);
-                    }
                 }
+
+                String zeile2 = lesestring.split(",")[1];
+                System.out.println(zeile2);
+                    if (zeile2.startsWith("level:")) {
+                        level = Integer.parseInt(zeile2.split(":")[1]);
+
+                    }
+                String zeile3 = lesestring.split(",")[2];
+                System.out.println(zeile3);
+                if (zeile3.startsWith("leben:")) {
+
+                    leben = Integer.parseInt(zeile3.split(":")[1]);
+
+                }
+                String zeile4 = lesestring.split(",")[3];
+                System.out.println(zeile4);
+                if (zeile4.startsWith("RGB:")) {
+
+                    RGBmünzen = Integer.parseInt(zeile4.split(":")[1]);
+
+                }
+                System.out.println(leben);
+
             }
         }
     }
@@ -57,7 +79,7 @@ public class Spielstand {
             //das "\n" ist ein zeilenwechsel. dh, nach dem komma soll dann eine neue zeile beginnen
             //das dient lediglich der menschlichen lesbarkeit damit wir, solange wir noch entwickeln
             //uns die datei dann auch anschauen können und überprüfen können was wo drin steht
-            datei.writeString("münzen:" + münzen + ",\n" + "level:" + level + ",\n",false);
+            datei.writeString("münzen:" + münzen + "," + "level:" + level + "," + "leben:" + leben + "," + "RGB:" + RGBmünzen + ",",false);
            // datei.writeString("level:" + level + ",\n",false);
 
         }

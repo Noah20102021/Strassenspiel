@@ -51,7 +51,8 @@ public class Level1 implements Screen {
         initialisierung();
     }
 
-
+   public String GTpng = "-";
+   public Integer GT;
     private void initialisierung(){
 
         //Zuerst die Objekte Initialisieren die zur Darstellung des Spielfeldes benutzt werden
@@ -77,10 +78,10 @@ public class Level1 implements Screen {
         fahrzeugliste = new Array<>();
         letztesAutoGeneriert = TimeUtils.millis() -4000;
 
+        GT = MathUtils.random(1, 10);
+        System.out.println(GT);
         //werbebanner positionieren
-        if(Hauptspiel.adsController!=null) {
-            Hauptspiel.adsController.setzeBannerposition(100, 220);
-        }
+     //  Hauptspiel.adsController.setzeBannerposition(100,220);
 
     }
 
@@ -94,7 +95,7 @@ public class Level1 implements Screen {
     // von der graphikdarstellung ausgeführt wird
     @Override
     public void render(float delta) {
-        System.out.println(Hauptspiel.spielstand.münzen);
+       // System.out.println(Hauptspiel.spielstand.münzen);
         //Erst mal Hintergrundfarbe machen damit etwas zu sehen ist falls das Hintergrundbild nicht oder nicht richtig geladen wird.
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -109,7 +110,13 @@ public class Level1 implements Screen {
         //das kann man später, der übersicht halber, in eine seperate klasse auslagern. im moment reicht das noch so
         if (lvl1geschafft) {
 
-            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft.png");
+            if (GT == 4){
+            GTpng = "+";
+            Hauptspiel.spielstand.RGBmünzen += 10;
+            Hauptspiel.spielstand.Speichern();
+                GT = 0;
+            }
+            lvl1geschafftmeldung = new Texture("LVL.1 Geschafft" + GTpng + ".png");
             batch.draw(lvl1geschafftmeldung, 0, 0, lvl1geschafftmeldung.getWidth(), lvl1geschafftmeldung.getHeight());
             //nach dem darstellen des glückwunschbildschirms passiert nichts weiteres mehr dass für die
             //graphikkarte interessant ist. also können wir schon batch.end machen
@@ -141,6 +148,8 @@ public class Level1 implements Screen {
             }
             //wenn eine taste gedrückt wird dann soll alles zurückgesetzt werden und dder aktuelle stand gespeichert werden
             if (Gdx.input.isKeyJustPressed(Input.Keys.ANY_KEY) || Gdx.input.isTouched()) {
+                Hauptspiel.spielstand.leben -= 1;
+                Hauptspiel.spielstand.Speichern();
                 Hauptspiel.setScreen(new Menue(Hauptspiel));
                 Sounds.klick();
             }
