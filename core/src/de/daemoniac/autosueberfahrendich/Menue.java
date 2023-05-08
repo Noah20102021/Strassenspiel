@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 
@@ -27,6 +28,9 @@ starter Hauptspiel;
     public BitmapFont anzeige2;
 long menuedelay;
 public String f;
+Rectangle Playknopf;
+Rectangle Lebenknopf;
+
     public Menue(starter pHauptspiel){
 
     menuedelay = TimeUtils.millis();
@@ -62,7 +66,7 @@ public String f;
         Camera.update();
         ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.setProjectionMatrix(Camera.combined);
         ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.begin();
-        ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.draw(HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss,0,0,HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss.getWidth(),HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss.getHeight());
+        ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.draw(HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss, 0, 0, HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss.getWidth(), HhiinntteerrggrruunnddDdeessHhaauuppttMmeennuuewss.getHeight());
         String Münzen;
         String Leben;
         String RGB;
@@ -76,12 +80,22 @@ public String f;
         }
         Münzen = String.format("%,d", Hauptspiel.spielstand.muenzen);
         Leben = String.format("%,d", Hauptspiel.spielstand.leben);
-        RGB = String.format("%,d", Hauptspiel.spielstand.RGBmünzen);
+        RGB = String.format("%,d", Hauptspiel.spielstand.RGBmuenzen);
+        Playknopf = new Rectangle();
+        Playknopf.x = 1506;
+        Playknopf.width = 2449-1506;
+        Playknopf.y = 0;
+        Lebenknopf = new Rectangle();
+        Lebenknopf.x = 3099;
+        Lebenknopf.width = 3270-3099;
+        Lebenknopf.y = 1984;
+        Lebenknopf.height = 2177-1984;
+
         anzeige.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, Münzen, 290, 440);
         anzeige.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, RGB, 290, 300);
         anzeige2.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, Leben, 3650, 2150);
         ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen.end();
-        if (TimeUtils.millis()-menuedelay > 500) {
+        if (TimeUtils.millis() - menuedelay > 500) {
             if (Gdx.input.isTouched()) {
                 Vector3 NINUNINUNINUKNOPFWURDEBERÜRT = new Vector3();
                 NINUNINUNINUKNOPFWURDEBERÜRT.set(Gdx.input.getX(), Gdx.input.getY(), 0);

@@ -6,6 +6,8 @@ import com.badlogic.gdx.files.FileHandle;
 import java.util.Arrays;
 
 public class settings_datei {
+    //huhu :-)
+    //hi
     //alles was irgendwie gespeichert werden soll, sollte hier in dieser klasse drin stehen oder
     //von dieser klasse aus erreichbar sein. damit behält man gut den überblick was beim laden/speichern
     // alles berücksichtigt werden muss. das dient also in erster linie der einfachheit für uns

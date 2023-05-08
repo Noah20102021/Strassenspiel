@@ -31,7 +31,7 @@ public class Spielstand {
                 //wir haben jetzt eine liste an einzelnen informationen. aktuell speichern wir nur die münzanzahl
                 //dh in dieser liste wird nur ein einziges element sein. und das wird lauten "münzen:xxxx"
                 for(String zeile:splitstring){
-                    if(zeile.startsWith("münzen:")){
+                    if(zeile.startsWith("muenzen:")){
                         //mit split ":" teilen wir den text auf in 2 elemente. der vordere teil enthält dann
                         //"münzen", der hintere teil enthält dann die anzahl der münzen. mit [0] könnten
                         //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
@@ -79,7 +79,7 @@ public class Spielstand {
             //das "\n" ist ein zeilenwechsel. dh, nach dem komma soll dann eine neue zeile beginnen
             //das dient lediglich der menschlichen lesbarkeit damit wir, solange wir noch entwickeln
             //uns die datei dann auch anschauen können und überprüfen können was wo drin steht
-            datei.writeString("münzen:" + münzen + "," + "level:" + level + "," + "leben:" + leben + "," + "RGB:" + RGBmünzen + ",",false);
+            datei.writeString("muenzen:" + muenzen + "," + "level:" + level + "," + "leben:" + leben + "," + "RGB:" + RGBmuenzen + ",",false);
            // datei.writeString("level:" + level + ",\n",false);
 
         }
