@@ -20,7 +20,7 @@ android {
         applicationId "de.autosueberfahrendich"
         minSdkVersion 16
         targetSdkVersion 31
-        versionCode 12
+        versionCode 13
         versionName "1.0"
     }
     buildTypes {
