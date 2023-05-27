@@ -1,5 +1,6 @@
 package de.daemoniac.autosueberfahrendich;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 
@@ -29,11 +30,16 @@ public class Sounds {
 
     public static void klick(settings_datei settings) {
 //test
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Gdx.app.debug("Sound", "Teste Soundeinstellung");
         if(settings.sounds==1) {
+            Gdx.app.debug("Sound", "Einstellung an");
             String thePath = "Sounds/Klick.wav";
             Sounds player = new Sounds();
             player.play(thePath);
+            Gdx.app.debug("Sound", "abgespielt");
         }
+        Gdx.app.debug("Sound", "Ende");
     }
 
 }
