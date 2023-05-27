@@ -5,6 +5,7 @@ import com.badlogic.gdx.files.FileHandle;
 
 import java.util.Arrays;
 
+
 public class settings_datei {
     //huhu :-)
     //hi
@@ -30,7 +31,13 @@ public class settings_datei {
                 //wir haben jetzt eine liste an einzelnen informationen. aktuell speichern wir nur die münzanzahl
                 //dh in dieser liste wird nur ein einziges element sein. und das wird lauten "münzen:xxxx"
                 for(String zeile:splitstring){
-
+                    if(zeile.startsWith("Sounds:")){
+                        //mit split ":" teilen wir den text auf in 2 elemente. der vordere teil enthält dann
+                        //"münzen", der hintere teil enthält dann die anzahl der münzen. mit [0] könnten
+                        //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
+                        sounds=Integer.parseInt(zeile.split(":")[1]);
+                        System.out.println(sounds);
+                    }
 
                 }
             }
@@ -51,7 +58,7 @@ public class settings_datei {
             //das "\n" ist ein zeilenwechsel. dh, nach dem komma soll dann eine neue zeile beginnen
             //das dient lediglich der menschlichen lesbarkeit damit wir, solange wir noch entwickeln
             //uns die datei dann auch anschauen können und überprüfen können was wo drin steht
-            datei.writeString("Sounds: " + sounds + ",\n",false);
+            datei.writeString("Sounds:" + sounds + ",\n",false);
 
 
         }
