@@ -137,10 +137,10 @@ public class AndroidLauncher extends AndroidApplication implements AdsController
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				bannerAd.setVisibility(View.VISIBLE);
-				AdRequest.Builder builder = new AdRequest.Builder();
-				AdRequest ad = builder.build();
-				bannerAd.loadAd(ad);
+				//bannerAd.setVisibility(View.VISIBLE);
+				//AdRequest.Builder builder = new AdRequest.Builder();
+				//AdRequest ad = builder.build();
+				//bannerAd.loadAd(ad);
 			}
 		});
 	}
