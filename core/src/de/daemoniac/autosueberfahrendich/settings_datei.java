@@ -35,11 +35,17 @@ public class settings_datei {
                         //mit split ":" teilen wir den text auf in 2 elemente. der vordere teil enthält dann
                         //"münzen", der hintere teil enthält dann die anzahl der münzen. mit [0] könnten
                         //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
-                        sounds=Integer.parseInt(zeile.split(":")[1]);
-                        System.out.println(sounds);
+                        try {
+                            sounds = Integer.parseInt(zeile.split(":")[1]);
+                            System.out.println(sounds);
+                        }catch(NumberFormatException e1){
+
+                        }
                     }
 
                 }
+            }else{
+                Speichern();
             }
         }
     }
