@@ -27,13 +27,13 @@ public class Sounds {
 
     }
 
-    public static void klick() {
+    public static void klick(settings_datei settings) {
 //test
-
-        String thePath =  "Sounds/Klick.wav";
-        Sounds player = new Sounds();
-        player.play(thePath);
-
+        if(settings.sounds==1) {
+            String thePath = "Sounds/Klick.wav";
+            Sounds player = new Sounds();
+            player.play(thePath);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package de.daemoniac.autosueberfahrendich;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 
@@ -13,17 +14,29 @@ public class fahrzeug {
     //dargestellt werden soll
     public Texture autobild;
     public Rectangle rect;
-
+    public int fahrzeugnum;
+    public int geschwindigkeit;
     int fahrspur=0;
     String fahtrichtung;
-    public fahrzeug(int farzeugx, int farzeugy, String farzeugrichtung){
-        fahtrichtung=farzeugrichtung;
+    public fahrzeug(int farzeugx, int farzeugy, String farzeugrichtung, int autogeschwindigkeit) {
+        fahtrichtung = farzeugrichtung;
+        fahrzeugnum = MathUtils.random(1, 2);
+        geschwindigkeit=autogeschwindigkeit;
         //momentan passiert hier noch nicht viel. beim erstellen einer neuen instanz der klasse wird die texture geladen
         //man könnte hier jetzt einen zufallsgenerator einbauen und in abhängigkeit des ergebnisses unterschiedliche texturen
         //darstellen. dann würden unterschiedliche autos da lang fahren
-        autobild=new Texture("pickup1" +farzeugrichtung+".png");
         //neue positionsbeschreibung erstellen
         rect = new Rectangle();
+        if (fahrzeugnum == 1) {
+            autobild = new Texture("Texturen/Auto1" + farzeugrichtung + ".png");
+            //neue positionsbeschreibung erstellen
+            rect = new Rectangle();
+        }
+        if (fahrzeugnum == 2){
+            autobild = new Texture("Texturen/pickup1" + farzeugrichtung + ".png");
+            rect = new Rectangle();
+
+        }
         //wir haben festgestellt, dass das auto zu groß für die fahrspur ist, auf ein drittel der autogröße geschrumpft
         //sieht das besser aus. allerdings wissen wir nicht, ob andere autobilder ebenfalls genau so groß sind.
         //hier wäre also eine größenberechnung der zur verfügung stehenden fahrspur sinnvoller um unabhängig von der
@@ -37,3 +50,6 @@ public class fahrzeug {
         rect.y=farzeugy;
     }
 }
+
+
+

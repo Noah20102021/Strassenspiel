@@ -98,15 +98,7 @@ public class Menue implements Screen {
         Münzen = String.format("%,d", Hauptspiel.spielstand.muenzen);
         Leben = String.format("%,d", Hauptspiel.spielstand.leben);
         RGB = String.format("%,d", Hauptspiel.spielstand.RGBmuenzen);
-        Playknopf = new Rectangle();
-        Playknopf.x = 1506;
-        Playknopf.width = 2449-1506;
-        Playknopf.y = 0;
-        Lebenknopf = new Rectangle();
-        Lebenknopf.x = 3099;
-        Lebenknopf.width = 3270-3099;
-        Lebenknopf.y = 1984;
-        Lebenknopf.height = 2177-1984;
+
 
         anzeige.draw(HintergrundBatch, Münzen, 290, 440);
         anzeige.draw(HintergrundBatch, RGB, 290, 300);
@@ -161,6 +153,9 @@ public class Menue implements Screen {
                     }else{
                         //TODO:Meldung bringen dass Leben bereits voll sind
                     }
+                }
+                if ((KNOPFWURDEBERÜRT.x > EinstellungenKnopf.x) && (KNOPFWURDEBERÜRT.x < EinstellungenKnopf.x+EinstellungenKnopf.width )&& (KNOPFWURDEBERÜRT.y > EinstellungenKnopf.y) && (KNOPFWURDEBERÜRT.y < EinstellungenKnopf.y+EinstellungenKnopf.height)){
+                    Hauptspiel.setScreen(new Einstellungen(Hauptspiel));
                 }
             }//Touch bereich ende
         }
