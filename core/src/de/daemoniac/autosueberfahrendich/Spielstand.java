@@ -3,6 +3,11 @@ package de.daemoniac.autosueberfahrendich;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.logging.FileHandler;
 
 public class Spielstand {
@@ -13,6 +18,8 @@ public class Spielstand {
     public Integer level=1;
     public Integer RGBmuenzen = 0;
     public Integer leben=5;
+    public Date lebenszeit = new Date();
+
     public void Laden(){
         //zuerst überprüfen ob wir auf den lokalen speicher zugreifen können.
         boolean isLocalAvailable = Gdx.files.isLocalStorageAvailable();
@@ -26,7 +33,7 @@ public class Spielstand {
                 //in handlichere teile aufspalten. es ist sinnvoll sich irgendein zeichen auszudenken
                 //mit dem man einzelne werte voneinander trennen kann. hier habe ich ein "," genommen. man könnte aber auch
                 // "/" oder ";" nehmen.
-                String lesestring=datei.readString();;
+                String lesestring=datei.readString();
                 String[] splitstring = lesestring.split(",");
                 //wir haben jetzt eine liste an einzelnen informationen. aktuell speichern wir nur die münzanzahl
                 //dh in dieser liste wird nur ein einziges element sein. und das wird lauten "münzen:xxxx"
@@ -76,7 +83,11 @@ public class Spielstand {
             //das "\n" ist ein zeilenwechsel. dh, nach dem komma soll dann eine neue zeile beginnen
             //das dient lediglich der menschlichen lesbarkeit damit wir, solange wir noch entwickeln
             //uns die datei dann auch anschauen können und überprüfen können was wo drin steht
-            datei.writeString("muenzen:" + muenzen + "," + "level:" + level + "," + "leben:" + leben + "," + "RGB:" + RGBmuenzen + ",",false);
+            SimpleDateFormat lebenszeitformat =new SimpleDateFormat ("yyyy-MM-dd hh/mm/ss");
+
+            datei.writeString("muenzen:" + muenzen + "," + "level:" + level + "," + "leben:" + leben + "," +
+                    "RGB:" + RGBmuenzen + "," + "Lebenszeit:" + lebenszeitformat.format(lebenszeit) + ",",false);
+
            // datei.writeString("level:" + level + ",\n",false);
 
         }

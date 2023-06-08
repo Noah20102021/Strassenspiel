@@ -15,6 +15,7 @@ import de.daemoniac.autosueberfahrendich.*;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Date;
 
 public class Menue implements Screen {
     SpriteBatch batch;
@@ -32,6 +33,7 @@ public class Menue implements Screen {
     Rectangle Playknopf;
     Rectangle Lebenknopf;
     Rectangle EinstellungenKnopf;
+    Rectangle Kontaktknopf;
 
     public Menue(starter pHauptspiel){
 
@@ -56,6 +58,11 @@ public class Menue implements Screen {
         EinstellungenKnopf.y=1611;
         EinstellungenKnopf.width=3464-3217;
         EinstellungenKnopf.height=1861-1611;
+        Kontaktknopf = new Rectangle();
+        Kontaktknopf.x = 2936;
+        Kontaktknopf.width = 3138-2936;
+        Kontaktknopf.y = 1626;
+        Kontaktknopf.height = 1861-1626;
     }
     @Override
     public void show() {
@@ -93,7 +100,7 @@ public class Menue implements Screen {
             debugkoords = new Vector3();
             debugkoords.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             Camera.unproject(debugkoords);
-            //anzeige.draw(ChefDerNichtsMachenMussUndAllenSagtWasSieMachenSollen, debugkoords.toString(), 290, 260);
+            //anzeige.draw(HintergrundBatch, debugkoords.toString(), 290, 260);
         }
         Münzen = String.format("%,d", Hauptspiel.spielstand.muenzen);
         Leben = String.format("%,d", Hauptspiel.spielstand.leben);
@@ -157,7 +164,50 @@ public class Menue implements Screen {
                 if ((KNOPFWURDEBERÜRT.x > EinstellungenKnopf.x) && (KNOPFWURDEBERÜRT.x < EinstellungenKnopf.x+EinstellungenKnopf.width )&& (KNOPFWURDEBERÜRT.y > EinstellungenKnopf.y) && (KNOPFWURDEBERÜRT.y < EinstellungenKnopf.y+EinstellungenKnopf.height)){
                     Hauptspiel.setScreen(new Einstellungen(Hauptspiel));
                 }
+                if ((KNOPFWURDEBERÜRT.x > Kontaktknopf.x) && (KNOPFWURDEBERÜRT.x < Kontaktknopf.x+Kontaktknopf.width )&& (KNOPFWURDEBERÜRT.y > Kontaktknopf.y) && (KNOPFWURDEBERÜRT.y < Kontaktknopf.y+Kontaktknopf.height)){
+                    Hauptspiel.setScreen(new Kontakt(Hauptspiel));
+                }
             }//Touch bereich ende
+        }
+        //Überprüfung ob neue Leben dazugewonnen werden
+        if(Hauptspiel.spielstand.leben<5){
+            long interval = new Date().getTime() - Hauptspiel.spielstand.lebenszeit.getTime();
+            if(interval>150*60*1000){
+                Hauptspiel.spielstand.lebenszeit=new Date();
+                Hauptspiel.spielstand.leben+=5;
+                if(Hauptspiel.spielstand.leben>5){
+                    Hauptspiel.spielstand.leben=5;
+                }
+                Hauptspiel.spielstand.Speichern();
+            }else if(interval>120*60*1000){
+                Hauptspiel.spielstand.lebenszeit=new Date();
+                Hauptspiel.spielstand.leben+=4;
+                if(Hauptspiel.spielstand.leben>5){
+                    Hauptspiel.spielstand.leben=5;
+                }
+                Hauptspiel.spielstand.Speichern();
+            }else if(interval>90*60*1000){
+                Hauptspiel.spielstand.lebenszeit=new Date();
+                Hauptspiel.spielstand.leben+=3;
+                if(Hauptspiel.spielstand.leben>5){
+                    Hauptspiel.spielstand.leben=5;
+                }
+                Hauptspiel.spielstand.Speichern();
+            }else if(interval>60*60*1000){
+                Hauptspiel.spielstand.lebenszeit=new Date();
+                Hauptspiel.spielstand.leben+=2;
+                if(Hauptspiel.spielstand.leben>5){
+                    Hauptspiel.spielstand.leben=5;
+                }
+                Hauptspiel.spielstand.Speichern();
+            }else if(interval>30*60*1000){
+                Hauptspiel.spielstand.lebenszeit=new Date();
+                Hauptspiel.spielstand.leben+=1;
+                if(Hauptspiel.spielstand.leben>5){
+                    Hauptspiel.spielstand.leben=5;
+                }
+                Hauptspiel.spielstand.Speichern();
+            }
         }
     }
 

@@ -33,7 +33,6 @@ public class Einstellungen implements Screen {
         Camera=new OrthographicCamera();
         Camera.setToOrtho(false,3910,2270);
         Hintergrund=new Texture("Texturen/Einstellungen.png");
-        Gafik=new SpriteBatch();
         Gafik = new SpriteBatch(6);
         font = new BitmapFont();
         font.getData().setScale(1);
