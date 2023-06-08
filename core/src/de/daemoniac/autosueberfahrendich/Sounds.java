@@ -16,30 +16,30 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.sound.sampled.SourceDataLine;
 
 public class Sounds {
-
+    private static Sounds singletonMe;
     //defining the byte buffer
     private static final int BUFFER_SIZE = 4096;
-    Sound Soundobject;
-    void play(String filePath) {
-
-
-            Soundobject = Gdx.audio.newSound(Gdx.files.internal(filePath));
-            Soundobject.play();
-
-    }
+    protected Sound klick;
 
     public static void klick(settings_datei settings) {
-//test
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
-        Gdx.app.debug("Sound", "Teste Soundeinstellung");
+
         if(settings.sounds==1) {
-            Gdx.app.debug("Sound", "Einstellung an");
+
             String thePath = "Sounds/Klick.wav";
-            Sounds player = new Sounds();
-            player.play(thePath);
+            if(singletonMe == null) {
+                Gdx.app.debug("Sound", "erstelle klasse für soundspeicher");
+                singletonMe = new Sounds();
+            }
+            if(singletonMe.klick==null){
+                Gdx.app.debug("Sound", "lade klicksound in speicher");
+                singletonMe.klick = Gdx.audio.newSound(Gdx.files.internal(thePath));
+            }
+            singletonMe.klick.play();
+
             Gdx.app.debug("Sound", "abgespielt");
         }
-        Gdx.app.debug("Sound", "Ende");
+
     }
 
 }
