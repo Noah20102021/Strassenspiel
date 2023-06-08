@@ -31,35 +31,32 @@ public class Spielstand {
                 //wir haben jetzt eine liste an einzelnen informationen. aktuell speichern wir nur die münzanzahl
                 //dh in dieser liste wird nur ein einziges element sein. und das wird lauten "münzen:xxxx"
                 for(String zeile:splitstring){
-                    if(zeile.startsWith("muenzen:")){
-                        //mit split ":" teilen wir den text auf in 2 elemente. der vordere teil enthält dann
-                        //"münzen", der hintere teil enthält dann die anzahl der münzen. mit [0] könnten
-                        //wir auf "münzen" zugreifen. mit [1] auf den zweiten teil, also die anzahl der münzen
-                        muenzen=Integer.parseInt(zeile.split(":")[1]);
-                    }
-                }
+                    if(zeile.contains(":")) {
+                        String[] eintrag = zeile.split(":");
+                        switch (eintrag[0]) {
+                            case "muenzen":
+                                muenzen = Integer.parseInt(eintrag[1]);
+                                break;
+                            case "level":
+                                level = Integer.parseInt(eintrag[1]);
+                                break;
+                            case "leben":
+                                leben = Integer.parseInt(eintrag[1]);
+                                break;
+                            case "RGB":
+                                RGBmuenzen = Integer.parseInt(eintrag[1]);
+                                break;
+                            case "Lebenszeit":
+                                try {
+                                    lebenszeit = new SimpleDateFormat("yyyy-MM-dd hh/mm/ss").parse((eintrag[1]));
+                                } catch (ParseException e) {
 
-                String zeile2 = lesestring.split(",")[1];
-                System.out.println(zeile2);
-                    if (zeile2.startsWith("level:")) {
-                        level = Integer.parseInt(zeile2.split(":")[1]);
+                                }
+                                break;
+                        }//end switch
+                    }//ende if contains :
+                }//ende forschleife über alle einträge
 
-                    }
-                String zeile3 = lesestring.split(",")[2];
-                System.out.println(zeile3);
-                if (zeile3.startsWith("leben:")) {
-
-                    leben = Integer.parseInt(zeile3.split(":")[1]);
-
-                }
-                String zeile4 = lesestring.split(",")[3];
-                System.out.println(zeile4);
-                if (zeile4.startsWith("RGB:")) {
-
-                    RGBmuenzen = Integer.parseInt(zeile4.split(":")[1]);
-
-                }
-                System.out.println(leben);
 
             }
         }
