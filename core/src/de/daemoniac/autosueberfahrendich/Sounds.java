@@ -20,7 +20,45 @@ public class Sounds {
     //defining the byte buffer
     private static final int BUFFER_SIZE = 4096;
     protected Sound klick;
-
+    protected Sound strassenmusik;
+    protected boolean strassenmusikSpielt;
+    public static void initialisiereSounds(){
+        String thePath = "Sounds/";
+        if(singletonMe == null) {
+            Gdx.app.debug("Sound-Iniitialisieren", "erstelle klasse für soundspeicher");
+            singletonMe = new Sounds();
+        }
+        if(singletonMe.klick==null){
+            Gdx.app.debug("Sound-Iniitialisieren", "lade klicksound in speicher");
+            singletonMe.klick = Gdx.audio.newSound(Gdx.files.internal(thePath + "Klick.wav"));
+        }
+        if(singletonMe.strassenmusik==null){
+            Gdx.app.debug("Sound-Iniitialisieren", "lade strassenmusik in speicher");
+            singletonMe.strassenmusik = Gdx.audio.newSound(Gdx.files.internal(thePath + "Straßen-Geräusche.mp3"));
+        }
+    }
+    public static void strassenmusikStart(settings_datei settings) {
+        if(settings.sounds==1) {
+            if(singletonMe==null){
+                initialisiereSounds();
+            }
+            if(singletonMe!=null && singletonMe.strassenmusik!=null) {
+                singletonMe.strassenmusik.loop();
+                singletonMe.strassenmusikSpielt=true;
+            }
+        }
+    }
+    public static void strassenmusikStop(settings_datei settings) {
+        if(settings.sounds==1) {
+            if(singletonMe==null){
+                initialisiereSounds();
+            }
+            if(singletonMe!=null && singletonMe.strassenmusik!=null && singletonMe.strassenmusikSpielt==true) {
+                singletonMe.strassenmusikSpielt=false;
+                singletonMe.strassenmusik.stop();
+            }
+        }
+    }
     public static void klick(settings_datei settings) {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
