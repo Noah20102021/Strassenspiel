@@ -74,7 +74,7 @@ hintergrund = hintergrund;
         System.out.println(GT);
         //werbebanner positionieren
         //  Hauptspiel.adsController.setzeBannerposition(100,220);
-
+        Sounds.strassenmusikStart(Hauptspiel.settings_datei);
     }
 
     protected void MasterRender(){
@@ -92,7 +92,7 @@ hintergrund = hintergrund;
         //zuerst überprüfen wir ob ein zwischenbild dargestellt werden soll (level geschafft oder gescheitert)
         //das kann man später, der übersicht halber, in eine seperate klasse auslagern. im moment reicht das noch so
         if (lvlgeschafft) {
-
+            Sounds.strassenmusikStop(Hauptspiel.settings_datei);
             if (GT == 4){
                 GTpng = "+";
                 Hauptspiel.spielstand.RGBmuenzen += 10;
@@ -117,7 +117,7 @@ hintergrund = hintergrund;
             }
 
         } else if (gescheitert) {
-
+            Sounds.strassenmusikStop(Hauptspiel.settings_datei);
             gescheitertmeldung = new Texture(gescheitertbildname);
             batch.draw(gescheitertmeldung, 0, 0, gescheitertmeldung.getWidth(), gescheitertmeldung.getHeight());
             //nach dem darstellen des gescheitertbildschirms passiert nichts weiteres mehr dass für die

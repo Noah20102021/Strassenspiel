@@ -63,6 +63,8 @@ public class Menue implements Screen {
         Kontaktknopf.width = 3138-2936;
         Kontaktknopf.y = 1626;
         Kontaktknopf.height = 1861-1626;
+
+        Sounds.initialisiereSounds();
     }
     @Override
     public void show() {
@@ -118,22 +120,19 @@ public class Menue implements Screen {
                 Camera.unproject(KNOPFWURDEBERÜRT);
                 if (KNOPFWURDEBERÜRT.x > Playknopf.x && KNOPFWURDEBERÜRT.x < Playknopf.x+Playknopf.width) {//Der Play-Knopf
                     if (Hauptspiel.spielstand.leben > 0) {
+                        Sounds.klick(Hauptspiel.settings_datei);
                         switch (Hauptspiel.spielstand.level) {
                             case 1:
                                 Hauptspiel.setScreen(new Level1(Hauptspiel));
-                                Sounds.klick(Hauptspiel.settings_datei);
                                 break;
                             case 2:
                                 Hauptspiel.setScreen(new Level2(Hauptspiel));
-                                Sounds.klick(Hauptspiel.settings_datei);
                                 break;
                             case 3:
                                 Hauptspiel.setScreen(new Level3(Hauptspiel));
-                                Sounds.klick(Hauptspiel.settings_datei);
                                 break;
                             case 4:
                                 Hauptspiel.setScreen(new Level4(Hauptspiel));
-                                Sounds.klick(Hauptspiel.settings_datei);
                                 break;
                             case 5:
                                 Hauptspiel.spielstand.level = 1;
@@ -147,6 +146,7 @@ public class Menue implements Screen {
                 }//end if play-knopf-gedrückt
 
                 if ((KNOPFWURDEBERÜRT.x > Lebenknopf.x) && (KNOPFWURDEBERÜRT.x < Lebenknopf.x+Lebenknopf.width )&& (KNOPFWURDEBERÜRT.y > Lebenknopf.y) && (KNOPFWURDEBERÜRT.y < Lebenknopf.y+Lebenknopf.height)){
+                    Sounds.klick(Hauptspiel.settings_datei);
                     if (Hauptspiel.spielstand.leben < 5){
                         if (Hauptspiel.spielstand.muenzen >= 5000){
                             //TODO: Abfrage erstellen ob man wirklich 5000 Münzen ausgeben möchte
@@ -162,9 +162,11 @@ public class Menue implements Screen {
                     }
                 }
                 if ((KNOPFWURDEBERÜRT.x > EinstellungenKnopf.x) && (KNOPFWURDEBERÜRT.x < EinstellungenKnopf.x+EinstellungenKnopf.width )&& (KNOPFWURDEBERÜRT.y > EinstellungenKnopf.y) && (KNOPFWURDEBERÜRT.y < EinstellungenKnopf.y+EinstellungenKnopf.height)){
+                    Sounds.klick(Hauptspiel.settings_datei);
                     Hauptspiel.setScreen(new Einstellungen(Hauptspiel));
                 }
                 if ((KNOPFWURDEBERÜRT.x > Kontaktknopf.x) && (KNOPFWURDEBERÜRT.x < Kontaktknopf.x+Kontaktknopf.width )&& (KNOPFWURDEBERÜRT.y > Kontaktknopf.y) && (KNOPFWURDEBERÜRT.y < Kontaktknopf.y+Kontaktknopf.height)){
+                    Sounds.klick(Hauptspiel.settings_datei);
                     Hauptspiel.setScreen(new Kontakt(Hauptspiel));
                 }
             }//Touch bereich ende

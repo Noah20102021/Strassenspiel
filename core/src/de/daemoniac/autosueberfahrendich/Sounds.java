@@ -60,24 +60,14 @@ public class Sounds {
         }
     }
     public static void klick(settings_datei settings) {
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
-
         if(settings.sounds==1) {
-
-            String thePath = "Sounds/Klick.wav";
-            if(singletonMe == null) {
-                Gdx.app.debug("Sound", "erstelle klasse für soundspeicher");
-                singletonMe = new Sounds();
+            if(singletonMe==null){
+                initialisiereSounds();
             }
-            if(singletonMe.klick==null){
-                Gdx.app.debug("Sound", "lade klicksound in speicher");
-                singletonMe.klick = Gdx.audio.newSound(Gdx.files.internal(thePath));
+            if(singletonMe!=null && singletonMe.strassenmusik!=null) {
+                singletonMe.klick.play();
             }
-            singletonMe.klick.play();
-
-            Gdx.app.debug("Sound", "abgespielt");
         }
-
     }
 
 }
